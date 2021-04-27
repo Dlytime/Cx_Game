@@ -1,13 +1,13 @@
 /**窗体类型 */
 export enum UIFormType {
-    /** 屏幕 */
-    Screen,
+    /** 游戏层 */
+    Game = "Game",
     /** 固定窗口 */
-    FixedUI,
+    FixedUI = "FixedUI",
     /** 弹出窗口 */
-    PopUp,
+    PopUp = "PopUp",
     /** 独立窗口 */
-    TopTips,
+    TopTips = "TopTips",
 }
 /**透明度类型 */
 export enum UIModalOpacity {
@@ -31,12 +31,31 @@ export enum UIState {
     Showing = 2,
     Hiding = 3
 }
-/** UI弹出动画类型 */
+/** UI弹出/关闭动画类型 */ 
 export enum UIAnimType {
-    none = 0,
+    none = 0, 
     scale = 1,
 }
-/** 常量 */
-export class UISysDefine {
-
+/** UI加载类型 */
+export enum UILoadType {
+    none = 0, 
+    resource = 1,
+    bundle = 2,
+}
+/** UI触发事件类型 */
+export enum UIEmitType {
+    now = 0, 
+    onShow = 1,
+    onClose = 2,
+    onHide = 3,
+    onDestroy = 4,
+}
+/** 动画action */
+export class UIAnimTween {
+    scale_open():cc.Tween {
+        return 
+    }
+    scale_close(resolve:any):cc.Tween {
+        return 
+    }
 }

@@ -1,9 +1,5 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+import { UIManager } from "../frame/baseMgr/UIManager";
+import TestBaseUI from "../UI/TestBaseUI";
 
 const {ccclass, property} = cc._decorator;
 
@@ -19,9 +15,21 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
+    onEnable() {
 
+    }
+    showUI() {
+        cc.assetManager.loadBundle('gameRes', {version: ''}, function (err, bundle) {
+            if (err) {
+                return console.error(err);
+            }
+            UIManager.getInstance().showUI(TestBaseUI,1,()=>{});
+            UIManager.getInstance().logAllInfo();
+        });
+    }
     start () {
 
+        
     }
 
     // update (dt) {}
