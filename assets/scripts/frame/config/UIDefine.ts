@@ -33,8 +33,8 @@ export enum UIState {
 }
 /** UI弹出/关闭动画类型 */ 
 export enum UIAnimType {
-    none = 0, 
-    scale = 1,
+    none = "", 
+    scale = "scale",
 }
 /** UI加载类型 */
 export enum UILoadType {
