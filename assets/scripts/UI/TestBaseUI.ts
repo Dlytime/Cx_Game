@@ -5,7 +5,9 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import { GameDefine } from "../frame/config/GameDefine";
 import { UIFormType, UIAnimType, UILoadType } from "../frame/config/UIDefine";
+import { Data, PlayerInfo } from "../frame/Data/Data";
 import { BaseUI } from "./BaseUI";
 
 const {ccclass, property} = cc._decorator;
@@ -29,6 +31,6 @@ export default class TestBaseUI extends BaseUI {
         return 
     }
     onLoad() {
-
+       
     }
 }

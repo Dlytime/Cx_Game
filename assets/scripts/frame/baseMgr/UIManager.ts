@@ -5,10 +5,11 @@
  * 功能：UI的显隐（支持resource动态加载和bundle加载）
  *      UI显示过度动画(弹出动画/关闭动画（待扩展）)
  *      窗口之间的通讯: 即时通讯、等待通讯
+ *      队列(待)
  * 使用示例：UIManager.getInstance().showUI(uiClass);
  */
 import {BaseUI,UIClass} from "../../UI/BaseUI";
-import { UIAnimType, UIEmitType, UILoadType } from "../config/UIDefine";
+import { UIAnimType, UIEmitType, UILoadType } from "../baseMgr/config/UIDefine";
 export class UIManager{
     private static _instance:UIManager = null;
     public static getInstance():UIManager 

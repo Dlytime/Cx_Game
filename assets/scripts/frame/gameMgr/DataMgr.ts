@@ -1,28 +1,11 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+import { DataManager } from "../baseMgr/DataManager";
+import { BaseConfigContainer, ConfigContainerClass } from "../DataConfig/Storage/BaseConfigContainer";
+import { PlayerInfo, PlayerInfoConfigContainer } from "../DataConfig/Storage/PlayerConfig";
 
-const {ccclass, property} = cc._decorator;
-
-@ccclass
-export default class NewClass extends cc.Component {
-
-    @property(cc.Label)
-    label: cc.Label = null;
-
-    @property
-    text: string = 'hello';
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {}
-
-    start () {
-
+export class DataMgr extends DataManager
+{
+    public loadAllConfig(callback?: Function): void {
+        this.loadConfig(PlayerInfoConfigContainer,()=>{});
     }
 
-    // update (dt) {}
 }

@@ -1,5 +1,5 @@
 import { UIManager } from "../frame/baseMgr/UIManager";
-import { UIAnimType, UIFormType, UILoadType } from "../frame/config/UIDefine";
+import { UIAnimType, UIFormType, UILoadType } from "../frame/baseMgr/config/UIDefine";
 
 export interface UIClass<T extends BaseUI>
 {

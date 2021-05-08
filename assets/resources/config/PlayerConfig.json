@@ -1,0 +1,10 @@
+{
+    "version":null,
+    "lastLoginTime": null,
+    "gold": 0,
+    "power": 0,
+    "volume": 1,
+    "bgmEnable": true,
+    "effectEnable": true,
+    "shakeEnable": true
+}
