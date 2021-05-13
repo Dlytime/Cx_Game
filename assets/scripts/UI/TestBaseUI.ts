@@ -5,9 +5,8 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import { GameDefine } from "../frame/config/GameDefine";
-import { UIFormType, UIAnimType, UILoadType } from "../frame/config/UIDefine";
-import { Data, PlayerInfo } from "../frame/Data/Data";
+import { UIFormType, UIAnimType, UILoadType } from "../frame/baseMgr/config/UIDefine";
+import { EventMgr } from "../frame/gameMgr/EventMgr";
 import { BaseUI } from "./BaseUI";
 
 const {ccclass, property} = cc._decorator;
@@ -25,12 +24,12 @@ export default class TestBaseUI extends BaseUI {
         return this.node.getChildByName("frame");
     }
     public receiveUIEmit(eventName: string, info: any) {
-        
+    
     }
     public init(baseInfo:any){
         return 
     }
     onLoad() {
-       
+
     }
 }

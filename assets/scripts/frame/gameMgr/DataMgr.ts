@@ -2,10 +2,13 @@ import { DataManager } from "../baseMgr/DataManager";
 import { BaseConfigContainer, ConfigContainerClass } from "../DataConfig/Storage/BaseConfigContainer";
 import { PlayerInfo, PlayerInfoConfigContainer } from "../DataConfig/Storage/PlayerConfig";
 
-export class DataMgr extends DataManager
+class DataMgrs extends DataManager
 {
     public loadAllConfig(callback?: Function): void {
-        this.loadConfig(PlayerInfoConfigContainer,()=>{});
+        this.loadConfig(PlayerInfoConfigContainer,()=>{
+            if(callback) callback();
+        });
     }
-
 }
+
+export const cx_DataMgr = new DataMgrs()

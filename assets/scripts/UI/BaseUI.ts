@@ -52,6 +52,8 @@ export abstract class BaseUI extends cc.Component
     }
     public abstract getAnimRoot(): cc.Node;
     public abstract receiveUIEmit(eventName:string,info:any);
+
+    /**onShow在init之后 */
     public abstract init(baseInfo:any);
 
     hideUI() {
@@ -66,7 +68,7 @@ export abstract class BaseUI extends cc.Component
     onDestroy(): void{
         cc.log(this.uiClass?this.uiClass.getClassName():"", " onDestroy");
     }
- 
+    /**onShow在init之后 */
     onShow():void{
         cc.log(this.uiClass?this.uiClass.getClassName():"" , " onShow");
     }

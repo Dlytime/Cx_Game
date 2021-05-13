@@ -5,6 +5,8 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import { cx_Define } from "../DataConfig/Game/Define";
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -21,8 +23,10 @@ export default class NewClass extends cc.Component {
     // onLoad () {}
 
     start () {
-
     }
-
+    /**获取服务器时间戳 */
+    getServerTimestamp() {
+        return new Date().getTime();//G_ServerInfo?G_ServerInfo.getServerTime():new Date().getTime();
+    }
     // update (dt) {}
 }

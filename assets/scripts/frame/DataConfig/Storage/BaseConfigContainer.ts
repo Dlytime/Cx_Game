@@ -8,11 +8,13 @@ export abstract class BaseConfigContainer
 {
     public abstract configName:string;
     public abstract isStorage:Boolean;
+    public abstract configData = null;
     protected mTag: any;
-    constructor(callback: Function, caller: any, arg: any) {
+    constructor(callback: Function, caller: any, arg: any = []) {
         this._loadConfig(()=>{
-            callback.bind(caller,...arg);
-        })
+            console.log(this.configName + " config load end");
+            callback.bind(caller,...arg)();
+        });
     }
     public get tag(): any
     {
@@ -22,6 +24,8 @@ export abstract class BaseConfigContainer
     {
         this.mTag = value;
     }
-
+    public getConfigData() {
+        return this.configData;
+    }
     public abstract _loadConfig(cb:Function):void;
 }

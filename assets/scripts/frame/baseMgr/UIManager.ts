@@ -5,11 +5,14 @@
  * 功能：UI的显隐（支持resource动态加载和bundle加载）
  *      UI显示过度动画(弹出动画/关闭动画（待扩展）)
  *      窗口之间的通讯: 即时通讯、等待通讯
- *      队列(待)
+ *      队列(待) 事件缓存触发删除(待), 对话框链式调用(待)
  * 使用示例：UIManager.getInstance().showUI(uiClass);
  */
 import {BaseUI,UIClass} from "../../UI/BaseUI";
 import { UIAnimType, UIEmitType, UILoadType } from "../baseMgr/config/UIDefine";
+import { cx_Define } from "../DataConfig/Game/Define";
+import { EventMgr } from "../gameMgr/EventMgr";
+import EventManager from "./EventManager";
 export class UIManager{
     private static _instance:UIManager = null;
     public static getInstance():UIManager 
@@ -21,15 +24,20 @@ export class UIManager{
         return this._instance;
     }
 
-    private nodepools:any = {};
-    private uiWaitEmitList:Array<{"uiClass":UIClass<BaseUI>,"eventName":string,"emitType":UIEmitType,"info":any}> = [];
-    private uiList: BaseUI[] = [];
-    private uiRoot:cc.Node = null;
-    private uiRoot_Game:cc.Node = null;
-    private uiRoot_FixedUI:cc.Node = null;
-    private uiRoot_PopUp:cc.Node = null;
-    private uiRoot_TopTips:cc.Node = null;
+    protected nodepools:any = {};
+    protected uiWaitEmitList:Array<{"uiClass":UIClass<BaseUI>,"eventName":string,"emitType":UIEmitType,"info":any}> = [];
+    protected uiList: BaseUI[] = [];
+    protected uiRoot:cc.Node = null;
+    protected uiRoot_Game:cc.Node = null;
+    protected uiRoot_FixedUI:cc.Node = null;
+    protected uiRoot_PopUp:cc.Node = null;
+    protected uiRoot_TopTips:cc.Node = null;
     constructor() {
+        EventMgr.addEventListener(cx_Define.EVENT.GAME_INIT_START,"UI",()=>{
+            this.init();
+        },this)
+    }
+    init() {
         this.uiRoot = cc.find("Canvas");
         this.uiRoot_Game = this.uiRoot.getChildByName("Game");
         this.uiRoot_FixedUI = this.uiRoot.getChildByName("FixedUI");
@@ -99,7 +107,7 @@ export class UIManager{
             let animRoot = ui.getAnimRoot();
             if(animRoot) {
                 let animType = uiClass.getUIAnimType();
-                this.playOpenAnim(animRoot,animType.open);
+                if(animType && animType.open) this.playOpenAnim(animRoot,animType.open);
             }
             //缓存窗口
             this.uiList.push(ui);
@@ -126,7 +134,8 @@ export class UIManager{
             if(this.uiList[i].uiClass === uiClass)
             {
                 let ui = this.uiList[i];
-                await this.playCloseAnim(ui.getAnimRoot(),ui.uiClass.getUIAnimType().close);
+                let animType = ui.uiClass.getUIAnimType();
+                if(animType && animType.close) await this.playCloseAnim(ui.getAnimRoot(),animType.close);
                 this.uiOnClose(this.uiList[i]);
                 let nodepool = this.getNodePool(uiClass.getClassName());
                 nodepool.put( this.uiList[i].node);
@@ -141,7 +150,6 @@ export class UIManager{
         if(ui)
         {
             this.uiOnHide(ui);
-            ui.onHide();
             ui.node.active = false;
         }
     }

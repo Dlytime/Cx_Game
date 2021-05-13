@@ -1,8 +1,9 @@
 interface IEvent {
-    type: number,
+    type: string,
     priority: number, 
     class_id: string,
-    callback: (data: any) => void
+    callback: (data: any) => void,
+    caller:any
 } 
  
 export default class EventManager {
@@ -21,12 +22,12 @@ export default class EventManager {
  
     /**
      * 
-     * @param {number} type 事件类型
+     * @param {string} type 事件类型
      * @param {Function} callback 触发函数
      * @param {string} tag 标识这个回调函数属于哪一个类(每个类都有一个唯一标识符)
      * @param {number} priority 事件优先级
      */
-    addEventListener(type: number, callback: any, class_id: string = "", priority: number = 0) {
+    addEventListener(type: string, class_id: string = "", callback: any,caller:any, priority: number = 0) {
         if (!type || !callback) { 
             return;
         }
@@ -45,7 +46,8 @@ export default class EventManager {
             type: type,
             class_id: class_id,
             priority: priority, 
-            callback: callback
+            callback: callback,
+            caller:caller,
         };
         if (priority > 0) {
             let isPush = true;
@@ -65,7 +67,7 @@ export default class EventManager {
         this.event_cache[type] = sub_cache;
     } 
  
-    dispatchEvent(type: number, params?: any) {
+    dispatchEvent(type: string, params?: any) {
         if (!type) {
             return;
         }
@@ -75,11 +77,11 @@ export default class EventManager {
         }
         for (let i = 0; i < sub_cache.length; i++) {
             let ievent = sub_cache[i];
-            ievent.callback(params)
+            ievent.callback.bind(ievent.caller,params)();
         }
     }
  
-    removeEventListener(type: number, callback: any) {
+    removeEventListener(type: string, callback: any) {
         if (!type || !callback) {
             return;
          }
@@ -98,7 +100,7 @@ export default class EventManager {
          }
     }
  
-    removeEventListenerByTag(type: number, class_id: string) {
+    removeEventListenerByTag(type: string, class_id: string) {
         if (!type) {
             return;
         }

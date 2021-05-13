@@ -3,7 +3,7 @@ import { PlayerInfo, PlayerInfoConfigContainer } from "../DataConfig/Storage/Pla
 
 export abstract class DataManager
 {
-    private configContainerList = [];
+    private configContainerList:Array<BaseConfigContainer> = [];
     private curLoadedCount: number = 0;
 
  
@@ -22,10 +22,16 @@ export abstract class DataManager
         }
         return null;
     }
- 
+    public getConfigData<T extends BaseConfigContainer>(configClass: ConfigContainerClass<T>): BaseConfigContainer
+    {
+        let config = this.getConfig(configClass);
+        return config?config.configData:null;
+    }
     public loadConfig<T extends BaseConfigContainer>(configClass: ConfigContainerClass<T>, callback: Function, arg?: any)
     {
-        let config = new configClass(callback, this, arg);
+        let config = new configClass(()=>{
+            this.callback(callback);
+        }, this, arg);
         config.tag = configClass;
         this.configContainerList.push(config);
     }

@@ -1,15 +1,15 @@
-import { RES_TYPE, Define } from "../DataConfig/Game/Define";
+import { TYPE_RES_TYPE, cx_Define } from "../DataConfig/Game/Define";
 
 	
 /**ccc工具类 */
-export class ccTools{
+class ccTools{
     /**
      * 获取自身节点下的坐标点在另一个节点下的坐标
      * @param {cc.Node} self 自身节点
      * @param {cc.Node} other 目标节点
      * @param {cc.Vec2||Array} point 转换的坐标(单个坐标或数组)
      */
-     public static converToOtherNodePos(self:cc.Node,other:cc.Node,point:any,camera:cc.Camera) {
+     converToOtherNodePos(self:cc.Node,other:cc.Node,point:any,camera:cc.Camera) {
          function _converToOtherNodePos(self:cc.Node,other:cc.Node,point:any,camera:cc.Camera) {
             point = point?point:self.position;
         
@@ -35,7 +35,7 @@ export class ccTools{
 	* @param {cc.Node} node 
 	* @param {string} name 
 	*/
-	public static seekNodeByName(node:cc.Node, name:string) {
+	seekNodeByName(node:cc.Node, name:string) {
 		// body...
 		if (node.name === name) return node
 			var c = undefined
@@ -45,7 +45,7 @@ export class ccTools{
 			return c;
     }
     /**节点截图 */
-    public static screenNodeShot() {
+    screenNodeShot() {
 
     }
 
@@ -54,7 +54,7 @@ export class ccTools{
      * @param {cc.TiledMap} map 
      * @param {String} Layername 
      */
-    public static getLayerPixelPosArr(map:cc.TiledMap,Layername:string) {
+    getLayerPixelPosArr(map:cc.TiledMap,Layername:string) {
         var pixelposarr = [];
  
         var mapsize = map.getMapSize();
@@ -72,7 +72,7 @@ export class ccTools{
         cc.log("Layername: ",pixelposarr);
         return pixelposarr;
     }
-/*     public static getLayerTilePosArr(map:cc.TiledMap,Layername:string){
+/*     getLayerTilePosArr(map:cc.TiledMap,Layername:string){
         var tileposarr = [];
  
         var mapsize = map.getMapSize();
@@ -94,7 +94,7 @@ export class ccTools{
     } */
  
     /**像素坐标转换为瓦片坐标 */
-    public static getTilePos(map:cc.TiledMap,point:cc.Vec2){
+    getTilePos(map:cc.TiledMap,point:cc.Vec2){
         point = this.screenToOpengl(point,map);
         let mapSize = map.getMapSize();
         let tileSize = map.getTileSize();
@@ -102,7 +102,7 @@ export class ccTools{
         let y = Math.floor((mapSize.height * tileSize.height - point.y) / tileSize.height);
         return cc.v2(x, y);
     }
-    public static screenToOpengl(point:cc.Vec2,map:cc.TiledMap) {
+    screenToOpengl(point:cc.Vec2,map:cc.TiledMap) {
         let mapSize = map.getMapSize();
         let tileSize = map.getTileSize();
         let x = point.x + mapSize.width * tileSize.width / 2;
@@ -116,7 +116,7 @@ export class ccTools{
      * @param {cc.Vec2} tilespos 瓦片坐标
      * @param {cc.TiledMap} map 地图
      */
-    public static getPixelPos(tilespos:cc.Vec2,map:cc.TiledMap) {
+    getPixelPos(tilespos:cc.Vec2,map:cc.TiledMap) {
         var tilespos = tilespos;
         var mapnodepos = map.node.getPosition();
         var tilesize = map.getTileSize();
@@ -128,7 +128,7 @@ export class ccTools{
     }
 
     /**加载本地图片 */
-    public static loadLocalSf(path:string,cb:Function,args:Array<any> = []) {
+    loadLocalSf(path:string,cb:Function,args:Array<any> = []) {
         let url = path;
         cc.loader.loadRes(url, cc.SpriteFrame, function (err, spriteFrame) {
             if(err) console.error(err);
@@ -139,7 +139,7 @@ export class ccTools{
     }
 
     /**加载远程服务器png图片*/
-    public static loadRemoteSf(path,cb,args:Array<any> = []) {
+    loadRemoteSf(path,cb,args:Array<any> = []) {
         cc.loader.load(path, function (err, texture) {
             // Use texture to create sprite frame
             if(err) console.error(err);
@@ -153,13 +153,16 @@ export class ccTools{
     }
 
     /**加载本地Json*/
-    public static loadLocalJson(path:string,cb:Function,caller:any,args:Array<any> = []){
+    loadLocalJson(path:string,cb:Function,caller:any,args:Array<any> = []){
         cc.loader.loadRes(path, function (err, object) {
             if (err) {
                 console.log(err);
                 return;
             }
-            if(typeof cb == "function") cb.bind(caller,object.json,...args);
+            if(typeof cb == "function") {
+                //cb(object.json);
+                cb.bind(caller,object.json,...args)();
+            } 
             
         });
     }
@@ -169,7 +172,7 @@ export class ccTools{
      * @param {Function} cb 回调函数
      * @param {any} params 回调参数
      */
-    public static loadRemoteJson(path:string,cb:Function,args:Array<any> = []) {
+    loadRemoteJson(path:string,cb:Function,args:Array<any> = []) {
         cc.loader.load({ url: path, type: 'txt' }, (error, json) => {
             if (error) {
                 console.log(error);
@@ -179,7 +182,7 @@ export class ccTools{
         });
     }
     /**加载本地音频 */
-    public static loadLocalAudio(path:string,cb:Function,args:Array<any> = []) {
+    loadLocalAudio(path:string,cb:Function,args:Array<any> = []) {
         cc.loader.loadRes(path, cc.AudioClip, function (err, clip) {
             if(typeof cb === "function") {
                 if(clip instanceof cc.AudioClip) {
@@ -192,7 +195,7 @@ export class ccTools{
         });
     }
     /**加载远程音频 */
-    public static loadRemoteAudio(path:string,cb:Function,args:Array<any> = []) {
+    loadRemoteAudio(path:string,cb:Function,args:Array<any> = []) {
         cc.loader.load(path, function (err, clip) {
             if(err) {
                 console.error(err);
@@ -207,7 +210,7 @@ export class ccTools{
     }
 
     /**动态加载预制体 */
-    public static loadLocalPrefab(path:string,cb:Function,args:Array<any> = []) {
+    loadLocalPrefab(path:string,cb:Function,args:Array<any> = []) {
         cc.loader.loadRes(path, function (err, prefab) {
             if(err) console.error(err);
             if(typeof cb === "function") {
@@ -222,29 +225,29 @@ export class ccTools{
     }
 
     /**bundle加载资源 */
-    public static bundleLoad(bundleName:string,path:string,type:RES_TYPE,cb:Function,args:Array<any> = []) {
+    bundleLoad(bundleName:string,path:string,type:TYPE_RES_TYPE,cb:Function,args:Array<any> = []) {
         let bundle =  cc.assetManager.getBundle(bundleName);
         if(!bundle) {
             console.error("not find bundle ",bundleName);
             return;
         }
-        let newtype = Define.getResType(type);
+        let newtype = cx_Define.getResType(type);
         bundle.load(path,newtype,(error,res:any)=>{
             if(error) console.error(error);
             if(res instanceof cc.Texture2D) {
                 res = new cc.SpriteFrame(res, new cc.Rect(0, 0, res.width, res.height));
             }
-            if(typeof cb === "function") cb(res,...args);
+            if(typeof cb === "function") cb(res,...args)();
         })
     }
     /**加载bundle文件夹下所有指定类型资源 */
-    public static bundFolder(bundleName:string,path:string,type:RES_TYPE,cb:Function,args:Array<any> = []) {
+    bundFolder(bundleName:string,path:string,type:TYPE_RES_TYPE,cb:Function,args:Array<any> = []) {
         let bundle =  cc.assetManager.getBundle(bundleName);
         if(!bundle) {
             console.error("not find bundle ",bundleName);
             return;
         }
-        let newtype = Define.getResType(type);
+        let newtype = cx_Define.getResType(type);
         bundle.loadDir(path, newtype, function (err, assets) {
             cb(assets);
         });
@@ -319,3 +322,4 @@ export class ccTools{
         });
     } */
 }
+export const cx_ccTools = new ccTools();

@@ -1,3 +1,5 @@
+
+
 /* export class Data {
     public static PlayerInfo = 
     {
@@ -20,11 +22,16 @@
         curGameStatus: 0,
     }
 } */
-export class GameData {
+export class cx_CacheData {
     public static readonly version:string = "1.0.0";
     public static isPatch = false;
     public static isFirstJoinGame = false;
     public static isDayFirstJoinGame = false;
     public static gameRounds:number = 0;
     public static curGameStatus:string = null;
+
+    public static cacheRes:{sfs:{},prefab:{},audio:{},json:{},anim:{}} = 
+    {
+        sfs:{},prefab:{},audio:{},json:{},anim:{}
+    };
 }

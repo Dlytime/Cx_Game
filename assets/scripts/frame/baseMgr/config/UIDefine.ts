@@ -50,6 +50,7 @@ export enum UIEmitType {
     onHide = 3,
     onDestroy = 4,
 }
+
 /** 动画action */
 export class UIAnimTween {
     scale_open():cc.Tween {

@@ -5,24 +5,9 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-const {ccclass, property} = cc._decorator;
+import EventManager from "../baseMgr/EventManager";
 
-@ccclass
-export default class NewClass extends cc.Component {
+class EventMgrs extends EventManager {
 
-    @property(cc.Label)
-    label: cc.Label = null;
-
-    @property
-    text: string = 'hello';
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {}
-
-    start () {
-
-    }
-
-    // update (dt) {}
 }
+export const EventMgr = new EventMgrs();
