@@ -24,21 +24,15 @@ export default class NewClass extends cc.Component {
         
     }
     onEnable() {
-        cx_DataMgr.loadAllConfig(()=>{
-            let data = cx_DataMgr.getConfig(PlayerInfoConfigContainer);
-            console.log(data);
-        });
+
     }
     showUI() {
         cc.assetManager.loadBundle('gameRes', {version: ''}, function (err, bundle) {
             if (err) {
                 return console.error(err);
             }
-            UIManager.getInstance().showUI(TestBaseUI,1,()=>{});
-            UIManager.getInstance().logAllInfo();
+            cx_UIMgr.showUI(TestBaseUI);
         });
-
-        
     }
     TEST() {
         //console.log(cc.assetManager.assets);

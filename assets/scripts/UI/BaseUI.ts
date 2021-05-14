@@ -1,5 +1,6 @@
 import { UIManager } from "../frame/baseMgr/UIManager";
 import { UIAnimType, UIFormType, UILoadType } from "../frame/baseMgr/config/UIDefine";
+import { cx_UIMgr } from "../frame/gameMgr/UIMgr";
 
 export interface UIClass<T extends BaseUI>
 {
@@ -15,7 +16,7 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export abstract class BaseUI extends cc.Component
 {
-    protected static className:string = "BaseUI";
+    protected static className:string = "BaseUI";//注意类名和预制体名保持一致
     protected static UILoadType:UILoadType = UILoadType.none;
     protected static bundleName:string = "";
     protected static Url:string = "";//加载路径
@@ -50,20 +51,24 @@ export abstract class BaseUI extends cc.Component
     public static getUIAnimType(): {open:UIAnimType,close:UIAnimType} {
         return this.UIAnimType;
     }
-    public abstract getAnimRoot(): cc.Node;
-    public abstract receiveUIEmit(eventName:string,info:any);
+    public  getAnimRoot(): cc.Node {
+        return null;
+    }
+    protected receiveUIEmit(eventName:string,info:any) {
+
+    }
 
     /**onShow在init之后 */
     public abstract init(baseInfo:any);
 
     hideUI() {
-        UIManager.getInstance().hideUI(this.uiClass);
+        cx_UIMgr.hideUI(this.uiClass);
     }
     closeUI() {
-        UIManager.getInstance().closeUI(this.uiClass);
+        cx_UIMgr.closeUI(this.uiClass);
     }
     destroyUI() {
-        UIManager.getInstance().destroyUI(this.uiClass);
+        cx_UIMgr.destroyUI(this.uiClass);
     }
     onDestroy(): void{
         cc.log(this.uiClass?this.uiClass.getClassName():"", " onDestroy");

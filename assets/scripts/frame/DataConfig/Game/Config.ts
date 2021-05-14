@@ -1,10 +1,8 @@
-import { BaseUI } from "../../../UI/BaseUI";
 import { TYPE_RES_LOAD_TIME, TYPE_RES_TYPE } from "./Define";
 
 /**游戏配置 */
-export class cx_Config {
+export class cx_Config_Game {
     public static readonly version:string = "1.0.0";
-    public static readonly bundle = [/* "resource", */"gameRes"];
     public static logEnable:Boolean = true;
     public static MaxGold = 9999;
     public static MaxPower = 99;
@@ -30,22 +28,29 @@ export class cx_Config {
     }
 }
 
-interface Form_ResLoad {
-    name:string;
+export interface Form_ResLoad {
+    bundleName?:string
+    resName:string;
     url:string;
     resType:TYPE_RES_TYPE;
-    loadTime:TYPE_RES_LOAD_TIME;
+    loadTime?:TYPE_RES_LOAD_TIME;//默认为loading类型
 }
-export class Config_Res {
-    public static readonly remote:{sfs:Array<Form_ResLoad>} = 
-    {
-        sfs:[],
-    }
-    public static readonly bundle:
-    {
-        gameRes:
-        {
+interface Form_Res_Preload_bundle {
+    gameRes:{sfs:Array<Form_ResLoad>}
+}
+/**资源配置 */
+export class cx_Config_Res {
+    public static readonly bundleArr:Array<string> = ["gameRes"];
+/*     public static readonly preload_remote:Array<Form_ResLoad> = 
+    [
 
-        }
-    }
+    ] */
+    public static readonly preload_bundle:Array<Form_ResLoad> = 
+    [
+        {bundleName:"gameRes",resName:"logo",url:"sfs/logo",resType:TYPE_RES_TYPE.sfs}
+    ]
+    public static readonly preload_resource:Array<Form_ResLoad> = 
+    [
+        {resName:"icon",url:"sfs/icon",resType:TYPE_RES_TYPE.sfs}
+    ]
 }

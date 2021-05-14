@@ -50,8 +50,6 @@ export abstract class DataManager
     }
     private callback(callback: Function)
     {
-        //cc.log("callback");
- 
         this.curLoadedCount += 1;
         if(this.configContainerList.length == this.curLoadedCount)
         {

@@ -10,9 +10,9 @@
  */
 import {BaseUI,UIClass} from "../../UI/BaseUI";
 import { UIAnimType, UIEmitType, UILoadType } from "../baseMgr/config/UIDefine";
-import { cx_Define } from "../DataConfig/Game/Define";
+import { cx_Define, TYPE_RES_TYPE } from "../DataConfig/Game/Define";
 import { EventMgr } from "../gameMgr/EventMgr";
-import EventManager from "./EventManager";
+import { cx_LoaderMgr } from "../gameMgr/LoaderMgr";
 export class UIManager{
     private static _instance:UIManager = null;
     public static getInstance():UIManager 
@@ -69,6 +69,12 @@ export class UIManager{
     setRootNode(node:cc.Node) {
         this.uiRoot = node;
     }
+
+    /**
+     * 第一次显示预制体获取两种方式：
+     * 1、显示之前已经在资源管理类中进行预加载，直接获取,要求预制体名和类名保持一致
+     * 2、若从缓存中获取不到，则调用uiClass 中的url路径动态加载
+     */
     showUI<T extends BaseUI>(uiClass:UIClass<T>,zIndex?:number,cb?:Function,onProgress?:Function,...args:any[]) 
     {
         let className = uiClass.getClassName();
@@ -245,30 +251,24 @@ export class UIManager{
         this.nodepools[className] = nodepool;
         return nodepool;
     }
-    private loadPrefab<T extends BaseUI>(uiClass:UIClass<T>,cb:Function,onProgress?:Function) 
+    protected loadPrefab<T extends BaseUI>(uiClass:UIClass<T>,cb:(err,prefab) =>void,onProgress?:Function) 
     {
         let loadType = uiClass.getUILoadType();
         let url = uiClass.getUrl();
+        let className = uiClass.getClassName();
         if(loadType === UILoadType.resource)
         {
-            cc.loader.loadRes(url,(completedCount: number, totalCount: number, item: any)=>{
-                if(onProgress)
-                {
-                    onProgress(completedCount, totalCount, item);
-                }
-            }, (error, prefab)=>
-            {
-                cb(error,prefab);
-            });
+            cx_LoaderMgr.loadResourceRes(url,TYPE_RES_TYPE.prefab,(prefab)=>{
+                let err = prefab?null:(className + "load failed");
+                cb(err,prefab);
+            })
         }
         else if(loadType === UILoadType.bundle)
         {
             let bundleName = uiClass.getBundleName();
-            let bundle =  cc.assetManager.getBundle(bundleName);
-            if(!bundle) return cb("not find bundle " + bundleName,null);
-            	
-            bundle.load(url,cc.Prefab,(error,prefab)=>{
-                cb(error,prefab);
+            cx_LoaderMgr.loadBundleRes(bundleName,TYPE_RES_TYPE.prefab,url,(prefab)=>{
+                let err = prefab?null:(className + "load failed");
+                cb(err,prefab);
             })
         }
     }

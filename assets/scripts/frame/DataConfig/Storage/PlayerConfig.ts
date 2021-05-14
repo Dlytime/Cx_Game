@@ -1,4 +1,4 @@
-import { ccTools } from "../../tools/ccTools";
+import { cx_ccTools } from "../../tools/ccTools";
 import { cx_CacheData } from "../Game/Data";
 import { BaseConfigContainer } from "./BaseConfigContainer";
  
@@ -31,7 +31,7 @@ export class PlayerInfoConfigContainer extends BaseConfigContainer {
             cx_CacheData.isFirstJoinGame = true;
             cx_CacheData.isDayFirstJoinGame = true;
             let path = "config/PlayerConfig";
-            ccTools.loadLocalJson(path,(localConfig)=>{
+            cx_ccTools.loadLocalJson(path,(localConfig)=>{
                 this.configData = localConfig;
                 cb(this);
             },this);

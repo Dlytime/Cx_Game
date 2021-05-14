@@ -3,22 +3,11 @@ enum SortType {
     min_max = 1,
     max_min = 2,
 }
-export class cx_jsTools{
-/*     static _instance = null;
-    static _getInstance = function () {
-        if(!jsTools._instance) {
-            jsTools._instance = new jsTools();
-        }
-        return jsTools._instance;
-    };
-  */
-    constructor() {
- 
-    }
-    public static isArray(arr:Array<any>) {
+export class jsTools{
+    isArray(arr:Array<any>) {
         return typeof arr == 'object' && arr.constructor == Array;
     }
-    public static deleteValueFromArr(arr:Array<any>,value:any) {
+    deleteValueFromArr(arr:Array<any>,value:any) {
         if(!this.isArray(arr)) {
             console.error(arr," is not Array type")
         }
@@ -307,3 +296,4 @@ export class cx_jsTools{
     }
  
 }
+export const cx_jsTools = new jsTools();
