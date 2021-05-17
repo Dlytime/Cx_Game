@@ -1,5 +1,5 @@
 import { cx_Define, TYPE_RES_LOAD_TIME, TYPE_RES_TYPE } from "../DataConfig/Game/Define";
-import { EventMgr } from "../gameMgr/EventMgr";
+import { cx_EventMgr } from "../gameMgr/EventMgr";
 
 /**
  * 资源加载管理类

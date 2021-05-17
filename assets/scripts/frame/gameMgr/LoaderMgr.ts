@@ -3,19 +3,14 @@ import { cx_Config_Res, Form_ResLoad } from "../DataConfig/Game/Config";
 import { cx_CacheData } from "../DataConfig/Game/Data";
 import { cx_Define, TYPE_RES_LOAD_TIME, TYPE_RES_LOCAL, TYPE_RES_TYPE } from "../DataConfig/Game/Define";
 import { cx_jsTools } from "../tools/jsTools";
-import { EventMgr } from "./EventMgr";
+import { cx_EventMgr } from "./EventMgr";
 class LoaderMgr extends LoaderManager {
-    constructor() {
-        super();
-        EventMgr.addEventListener(cx_Define.EVENT.GAME_INIT_START,"loaderMgr",()=>{
-            this.loadInitRes();
-        },this);
-    }
     private resList:Array<any> = [];
     private faildResList:Array<string> = [];
-    private loadingResCount:number = 0;
+    private loadRemainResCount:number = 0;
+    private loadAllResCount:number = 0;
     private loadLogList:Array<string> = null;
-
+    private loadCompleteCb:Function = null;
     /**获取缓存资源 */
     getCacheRes(resType:TYPE_RES_TYPE,resName:string) 
     {
@@ -23,10 +18,15 @@ class LoaderMgr extends LoaderManager {
     }
     /**获取剩余未加载完成资源数 */
     getRemainResCount() {
-        return this.loadingResCount;
+        return this.loadRemainResCount;
     }
-    loadInitRes() {
+    /**获取当前轮资源加载总数 */
+    getAllLoadResCount() {
+        return this.loadAllResCount;
+    }
+    loadInitRes(completeCb?:Function) {
         let self = this;
+        this.loadCompleteCb = completeCb;
         cc.assetManager.loadBundle("gameRes",()=>{
             self.preLoadAutoRes();
             self.preLoadBundleRes("gameRes",TYPE_RES_LOAD_TIME.loading);
@@ -81,10 +81,11 @@ class LoaderMgr extends LoaderManager {
         this.loadBundleDir(bundleName,path,resType);
     }
     private _startLoadRes() {
-        this.loadingResCount++;
+        this.loadRemainResCount++;
+        this.loadAllResCount++;
     }
     private _handLoadRes(assets:any,resType) {
-        this.loadingResCount--;
+        this.loadRemainResCount--;
         if(!assets) return;
         if(cx_jsTools.isArray(assets)) 
         {
@@ -103,9 +104,13 @@ class LoaderMgr extends LoaderManager {
         this._checkLoadRes();
     }
     private _checkLoadRes() {
-        if(this.loadingResCount === 0) console.log("loader res end ,successList=>",this.resList,"    faildList=>",this.faildResList);
+        if(this.loadRemainResCount === 0) {
+            //console.log("loader res end ,successList=>",this.resList,"    faildList=>",this.faildResList);
+            if(this.loadCompleteCb) this.loadCompleteCb();
+            //this.loadAllResCount = 0;
+        } 
         else {
-            console.log("remain loading res count:",this.loadingResCount);
+            //console.log("remain loading res count:",this.loadRemainResCount);
         }
     }
     loadBundleRes(bundleName,resType:TYPE_RES_TYPE,url:string,callback?:(res:cc.Asset,...args:any) => void,args:Array<any> = []) {

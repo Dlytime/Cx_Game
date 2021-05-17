@@ -18,6 +18,21 @@ export enum TYPE_RES_LOCAL {
     bundle = "bundle",
     resource = "resource"
 }
+export enum TYPE_LEVEL {
+    type_1 = 1,
+    type_2 = 2
+
+}
+export enum TYPE_GAME_RESULT {
+    win = "win",
+    lose = "lose",
+    break = "break"
+}
+export enum TYPE_GAME_STATUS {
+    init = "init",
+    gaming = "gaming",
+    end = "end"
+}
 export class cx_Define {
     //事件定义
     public static readonly EVENT = 
@@ -26,11 +41,12 @@ export class cx_Define {
         GAME_INIT_END:"game_init_end",
 
         GAME_DATALOAD_END : "Game_DataLoad_end",
-        GAME_LOADING_START : "Game_Loading_start",
-        GAME_LOADING_END : "Game_Loading_end",
         
         RESLOAD_END : "ResLoad_end",
         
+        INIT_LEVEL : "init_level",
+        START_LEVEL : "start_level",
+        END_LEVEL : "end_level",
         LEVEL_INIT : "level_init",
         LEVEL_START : "level_start",
         LEVEL_END : "level_end",

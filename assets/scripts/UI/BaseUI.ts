@@ -54,10 +54,9 @@ export abstract class BaseUI extends cc.Component
     public  getAnimRoot(): cc.Node {
         return null;
     }
-    protected receiveUIEmit(eventName:string,info:any) {
+    public receiveUIEmit(eventName:string,info:any) {
 
     }
-
     /**onShow在init之后 */
     public abstract init(baseInfo:any);
 

@@ -10,4 +10,4 @@ import EventManager from "../baseMgr/EventManager";
 class EventMgrs extends EventManager {
 
 }
-export const EventMgr = new EventMgrs();
+export const cx_EventMgr = new EventMgrs();

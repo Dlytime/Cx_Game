@@ -1,5 +1,6 @@
 import { cx_ccTools } from "../../tools/ccTools";
 import { cx_CacheData } from "../Game/Data";
+import { TYPE_LEVEL } from "../Game/Define";
 import { BaseConfigContainer } from "./BaseConfigContainer";
  
 export class PlayerInfo
@@ -12,6 +13,9 @@ export class PlayerInfo
     bgmEnable: Boolean;
     effectEnable: Boolean;
     shakeEnable: Boolean;
+    curLevel: number;
+    levelType: TYPE_LEVEL;
+    maxLevel: number;
 }
  
 export class PlayerInfoConfigContainer extends BaseConfigContainer {
@@ -19,13 +23,13 @@ export class PlayerInfoConfigContainer extends BaseConfigContainer {
     public isStorage: Boolean = true;
     public configData: PlayerInfo = null;
 
-    public _loadConfig(cb:Function): void {
+    public _loadConfig(cb:(configData:PlayerInfo)=>void): void {
         let configData = cc.sys.localStorage.getItem('PlayerInfo');
         if(configData) {
             configData = JSON.parse(configData);
             configData = this._versionCheck(configData);
             this.configData = configData;
-            cb(this);
+            cb(configData);
         } else {
             //首次登陆，新玩家get
             cx_CacheData.isFirstJoinGame = true;
@@ -33,7 +37,7 @@ export class PlayerInfoConfigContainer extends BaseConfigContainer {
             let path = "config/PlayerConfig";
             cx_ccTools.loadLocalJson(path,(localConfig)=>{
                 this.configData = localConfig;
-                cb(this);
+                cb(localConfig);
             },this);
         }
     }

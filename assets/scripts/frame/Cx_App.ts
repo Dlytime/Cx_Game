@@ -12,7 +12,8 @@ import { UIManager } from "./baseMgr/UIManager";
 import { cx_Define } from "./DataConfig/Game/Define";
 import { PlayerInfoConfigContainer } from "./DataConfig/Storage/PlayerConfig";
 import { cx_DataMgr } from "./gameMgr/DataMgr";
-import { EventMgr } from "./gameMgr/EventMgr";
+import { cx_EventMgr } from "./gameMgr/EventMgr";
+import { cx_LoaderMgr } from "./gameMgr/LoaderMgr";
 import { cx_UIMgr } from "./gameMgr/UIMgr";
 
  
@@ -30,19 +31,15 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
  
     onLoad () {
-        cx_DataMgr.loadAllConfig(()=>{
-            let data = cx_DataMgr.getConfig(PlayerInfoConfigContainer);
-            console.log(data);
-        });
-        EventMgr.dispatchEvent(cx_Define.EVENT.GAME_INIT_START);
-
-        cx_UIMgr.showUI(DlgLoading);
+        cx_EventMgr.dispatchEvent(cx_Define.EVENT.GAME_INIT_START,{caller:this});
     }
  
     start () {
  
     }
  
-    // update (dt) {}
+    update (dt) {
+        
+    }
 }
  

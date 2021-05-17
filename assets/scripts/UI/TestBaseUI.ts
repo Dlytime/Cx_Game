@@ -1,5 +1,4 @@
 import { UIFormType, UIAnimType, UILoadType } from "../frame/baseMgr/config/UIDefine";
-import { EventMgr } from "../frame/gameMgr/EventMgr";
 import { BaseUI } from "./BaseUI";
 
 const {ccclass, property} = cc._decorator;

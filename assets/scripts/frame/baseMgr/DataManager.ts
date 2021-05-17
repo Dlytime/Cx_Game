@@ -3,14 +3,13 @@ import { PlayerInfo, PlayerInfoConfigContainer } from "../DataConfig/Storage/Pla
 
 export abstract class DataManager
 {
-    private configContainerList:Array<BaseConfigContainer> = [];
+    private configContainerList:Array<any> = [];
     private curLoadedCount: number = 0;
 
  
     public abstract  loadAllConfig(callback?: Function): void /* {
         this.loadConfig(PlayerInfoConfigContainer, this.callback, callback);
     } */
- 
     public getConfig<T extends BaseConfigContainer>(configClass: ConfigContainerClass<T>): BaseConfigContainer
     {
         for(let i = 0; i < this.configContainerList.length; ++i)
@@ -22,15 +21,16 @@ export abstract class DataManager
         }
         return null;
     }
-    public getConfigData<T extends BaseConfigContainer>(configClass: ConfigContainerClass<T>): BaseConfigContainer
+    public getConfigData<T extends BaseConfigContainer>(configClass: ConfigContainerClass<T>,key:string): BaseConfigContainer
     {
         let config = this.getConfig(configClass);
-        return config?config.configData:null;
+        return config?config.configData[key]:null;
     }
-    public loadConfig<T extends BaseConfigContainer>(configClass: ConfigContainerClass<T>, callback: Function, arg?: any)
+    public loadConfig<T extends BaseConfigContainer>(configClass: ConfigContainerClass<T>, completeCb: (configData:any)=>void,allCompleteCb:Function, arg?: any)
     {
-        let config = new configClass(()=>{
-            this.callback(callback);
+        let config = new configClass((configData:any)=>{
+            this.callback(allCompleteCb);
+            completeCb(configData);
         }, this, arg);
         config.tag = configClass;
         this.configContainerList.push(config);
@@ -45,7 +45,7 @@ export abstract class DataManager
             }
         }
     }
-    private storageConfig<T extends BaseConfigContainer>(configClass: ConfigContainerClass<T>) {
+    protected storageConfig<T extends BaseConfigContainer>(configClass: ConfigContainerClass<T>) {
         
     }
     private callback(callback: Function)

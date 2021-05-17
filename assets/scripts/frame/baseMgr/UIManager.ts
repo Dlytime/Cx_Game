@@ -11,7 +11,7 @@
 import {BaseUI,UIClass} from "../../UI/BaseUI";
 import { UIAnimType, UIEmitType, UILoadType } from "../baseMgr/config/UIDefine";
 import { cx_Define, TYPE_RES_TYPE } from "../DataConfig/Game/Define";
-import { EventMgr } from "../gameMgr/EventMgr";
+import { cx_EventMgr } from "../gameMgr/EventMgr";
 import { cx_LoaderMgr } from "../gameMgr/LoaderMgr";
 export class UIManager{
     private static _instance:UIManager = null;
@@ -33,7 +33,7 @@ export class UIManager{
     protected uiRoot_PopUp:cc.Node = null;
     protected uiRoot_TopTips:cc.Node = null;
     constructor() {
-        EventMgr.addEventListener(cx_Define.EVENT.GAME_INIT_START,"UI",()=>{
+        cx_EventMgr.addEventListener(cx_Define.EVENT.GAME_INIT_START,"UI",()=>{
             this.init();
         },this)
     }
@@ -75,7 +75,7 @@ export class UIManager{
      * 1、显示之前已经在资源管理类中进行预加载，直接获取,要求预制体名和类名保持一致
      * 2、若从缓存中获取不到，则调用uiClass 中的url路径动态加载
      */
-    showUI<T extends BaseUI>(uiClass:UIClass<T>,zIndex?:number,cb?:Function,onProgress?:Function,...args:any[]) 
+    showUI<T extends BaseUI>(uiClass:UIClass<T>,zIndex:number = 0,cb?:(ui:any,...args:any)=>void,caller?:any,onProgress?:Function,...args:any[]) 
     {
         let className = uiClass.getClassName();
         if(this.getUI(uiClass))
@@ -118,7 +118,10 @@ export class UIManager{
             //缓存窗口
             this.uiList.push(ui);
 
-            if(cb){cb(ui, args);}
+            if(cb){
+                if(caller) cb.bind(caller,ui,...args)();
+                else cb(ui, ...args)
+            }
         },onProgress);
     }
     destroyUI<T extends BaseUI>(uiClass:UIClass<T>) {

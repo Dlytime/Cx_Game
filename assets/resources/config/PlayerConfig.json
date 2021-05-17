@@ -6,5 +6,8 @@
     "volume": 1,
     "bgmEnable": true,
     "effectEnable": true,
-    "shakeEnable": true
+    "shakeEnable": true,
+
+    "curLevel":1,
+    "levelType":1
 }

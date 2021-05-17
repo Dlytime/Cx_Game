@@ -9,7 +9,7 @@ export enum UIFormType {
     /** 独立窗口 */
     TopTips = "TopTips",
 }
-/**透明度类型 */
+/**透明度类型(该功能集成到perfab) */
 export enum UIModalOpacity {
     /** 没有mask, 可以穿透 */
     None,
