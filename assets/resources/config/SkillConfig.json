@@ -1,0 +1,36 @@
+{
+    "001":
+        {
+            "name":"chop",
+            "id":"001",
+            "desc":"向前挥刀砍",
+
+            "preparationDt":0,
+            "fireDt":"0.1|100",
+            "recover":0,
+
+            "fireType":0,
+            "rangeType":"circle",
+            "attackRange":0,
+            "offsetPos":{"x":0,"y":0},
+            "harmType":"one",
+            
+
+            "mpCost":0,
+            "buff":[{"name":"addHp","data":null}]
+        },
+    "002":
+        {
+            "name":"fireBall",
+            "id":"002",
+            "desc":"火球术,飞行到目标范围爆炸伤害",
+
+            "preparationDt":0,
+            "fireDt":"0.1|100",
+            "recover":0,
+
+            "mpCost":0,
+            "buff":[{"name":"addHp","data":null}]
+        }
+
+}
