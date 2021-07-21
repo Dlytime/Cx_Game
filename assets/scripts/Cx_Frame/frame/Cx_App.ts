@@ -26,6 +26,7 @@ export default class Cx_App extends cc.Component {
     FireTargetType =  Skill_FireTargetType.enemy;
 
     onLoad () {
+        console.log("patch 1.1")
         cx_EventMgr.dispatchEvent(cx_Define.EVENT.GAME_INIT_START,{caller:this});
     }
  
