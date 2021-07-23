@@ -1,3 +1,4 @@
+import skillControlMgr from "./skillControlMgr";
 
 /**
  * 技能流程模块基类
@@ -6,6 +7,18 @@
  * 3、dtCheck: 帧检测模块(每一帧都执行某一逻辑检测，直到触发结束条件，将结果返回到下一流程)，如：发射出去的子弹
  * 4、trigger：触发器(执行)模块基类,立即执行某一动作,如前摇、开始施法、伤害检测、结束施法
  */
-export default class skillControlBase {
-    
+export default abstract class skillControlBase {
+    protected mManager:skillControlMgr = null;//流程管理类
+    /**流程数据初始化,在生成时调用 */
+    public init(mManager:skillControlMgr) {
+
+    }
+    /**开始流程,执行时调用 */
+    public start() {
+
+    }
+    /**流程结束 */
+    protected end() {
+
+    }
 }

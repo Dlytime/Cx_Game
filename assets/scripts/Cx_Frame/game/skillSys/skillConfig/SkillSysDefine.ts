@@ -41,29 +41,7 @@ export const Skill_FireTargetType = cc.Enum({
     /**友方 */
     frend : 1,
 })
-
-/**技能释放事件 */
-export const Skill_ContrlEvent =  {
-    /**前摇 */
-    preparation : "preparation",
-    /**释放 */
-    fire : "fire",
-    /**伤害 */
-    harm : "harm",
-    /**后摇 */
-    recover : "recover",
-    /**施法完成 */
-    complete : "complete",
-    /**施法中断 */
-    break: "break",
-    /**拥有者出生 */
-    born: "born",
-    /**拥有者死亡 */
-    death: "death",
-    /**技能开启 */
-    OnToggleOn:"onToggleOn",
-    /**技能关闭 */
-    OnToggleOff:"onToggleOff",
-}
-
+export const Skill_FireCondition = cc.Enum({
+    
+})
 

@@ -9,18 +9,21 @@ import { cx_Define, TYPE_GAME_RESULT } from "../frame/DataConfig/Game/Define";
 import { PlayerInfoConfigContainer } from "../frame/DataConfig/Storage/PlayerConfig";
 import { cx_DataMgr } from "../frame/gameMgr/DataMgr";
 import { cx_EventMgr } from "../frame/gameMgr/EventMgr";
+import { SkillDataStru } from "./skillSys/skillConfig/SkillDataInterface";
 
 const {ccclass, property} = cc._decorator;
-
+var typetest = cc.Enum({
+    dal:0,
+    dafda:1
+})
 @ccclass
 export default class NewClass extends cc.Component {
 
-    @property(cc.Label)
-    label: cc.Label = null;
+    @property({type:typetest})
+    label = typetest.dafda;
 
     @property
     text: string = 'hello';
-
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
@@ -28,7 +31,7 @@ export default class NewClass extends cc.Component {
         console.log(cx_DataMgr.getConfigData(PlayerInfoConfigContainer))
     }
     start () {
-
+ 
     }
     startGame() {
         cx_EventMgr.dispatchEvent(cx_Define.EVENT.START_LEVEL);
