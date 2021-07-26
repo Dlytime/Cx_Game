@@ -5,6 +5,8 @@ import skillControlMgr from "./skillControlMgr";
  * 技能流程：条件控制
  */
 export default class skillCtr_condition extends skillControlBase {
+    protected ctrData: any = null;
+
     protected ctrType: string = "condition";
     public async startCtr():Promise<boolean>
     {
@@ -13,6 +15,9 @@ export default class skillCtr_condition extends skillControlBase {
         return new Promise(async (resolve)=>{
             resolve(result);
         })
+    }
+    public loadData(info: any) {
+        
     }
     public endCtr() {
         

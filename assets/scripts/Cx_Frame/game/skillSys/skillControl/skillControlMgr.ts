@@ -1,3 +1,5 @@
+import skillActorMgrBase from "../skillActor/skillActorMgrBase";
+import { SkillCtrlEvent } from "../skillConfig/SkillEvent";
 import skillControlBase from "./skillControlBase";
 
 /* export interface skillCtrEvent<T extends skillControlBase> {
@@ -8,8 +10,14 @@ import skillControlBase from "./skillControlBase";
  * 技能流程控制管理类
  */
 export default class skillControlMgr {
+    private actorMgr:skillActorMgrBase = null;
+    private actorNode:cc.Node = null;
     private curSt:number = 0;
     private controls:Array<skillControlBase> = [];
+    init(actorMgr:skillActorMgrBase) {
+        this.actorMgr = actorMgr;
+        this.actorNode = this.actorMgr.node;
+    }
     doControls(controls: Array<any>,cb?:(result:boolean)=>{}) {
         
     }

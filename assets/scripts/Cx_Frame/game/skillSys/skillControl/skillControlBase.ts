@@ -9,13 +9,15 @@ import skillControlMgr from "./skillControlMgr";
  */
 export default abstract class skillControlBase {
     protected abstract ctrType:string;
+    protected abstract ctrData:any;
     protected mManager:skillControlMgr = null;//流程管理类
+    protected actorNode:cc.Node = null;//角色实体类(节点),用于和表现层的通信(事件通信)
     /**流程数据初始化,在生成时调用 */
-    public init(mManager:skillControlMgr){
+    public init(mManager:skillControlMgr,actorNode:cc.Node){
         this.mManager = mManager;
     };
     /**装载数据 */
-    public abstract loadData(info:any);
+    public abstract loadData(data:any);
     /**开始流程,执行时调用 */
     public abstract startCtr();
     /**结束流程 */
