@@ -8,17 +8,19 @@ import skillControlMgr from "./skillControlMgr";
  * 4、trigger：触发器(执行)模块基类,立即执行某一动作,如前摇、开始施法、伤害检测、结束施法
  */
 export default abstract class skillControlBase {
+    protected abstract ctrType:string;
     protected mManager:skillControlMgr = null;//流程管理类
     /**流程数据初始化,在生成时调用 */
-    public init(mManager:skillControlMgr) {
-
-    }
+    public init(mManager:skillControlMgr){
+        this.mManager = mManager;
+    };
+    /**装载数据 */
+    public abstract loadData(info:any);
     /**开始流程,执行时调用 */
-    public start() {
-
-    }
-    /**流程结束 */
-    protected end() {
-
+    public abstract startCtr();
+    /**结束流程 */
+    public abstract endCtr();
+    protected emitMgr(result:boolean,info?:any) {
+        this.mManager.emit(result,this,info);
     }
 }

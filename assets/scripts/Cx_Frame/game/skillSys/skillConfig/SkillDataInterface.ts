@@ -2,3 +2,7 @@
 export class SkillDataStru {
 
 }
+
+export interface ctrDataStru_timer {
+    
+}
