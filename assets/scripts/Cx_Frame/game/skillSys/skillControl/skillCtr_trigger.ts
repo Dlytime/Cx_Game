@@ -1,7 +1,8 @@
 import { SkillCtrlEvent } from "../skillConfig/SkillEvent";
 import skillControlBase from "./skillControlBase";
 interface ctrl_trigger_data{
-    event:SkillCtrlEvent
+    event:SkillCtrlEvent,
+    dt?:number,
 }
 /**
  * 技能流程：触发器模块
@@ -13,11 +14,19 @@ export default class skillCtrl_trigger extends skillControlBase {
         this.ctrData = data;
     }
     public startCtr() {
-        this.actorNode.emit(this.ctrData.event);
+        let dt = this.ctrData.dt;
+        if(dt && dt > 0) {
+            setTimeout(()=>{
+                this._doTrigger();
+            },dt * 1000);
+        } else this._doTrigger();
+    }
+    private _doTrigger() {
+        this.mManager.emitActorNode(this.ctrData.event);
         this.emitMgr(true);
     }
     public endCtr() {
-        throw new Error("Method not implemented.");
+        
     }
 
 }

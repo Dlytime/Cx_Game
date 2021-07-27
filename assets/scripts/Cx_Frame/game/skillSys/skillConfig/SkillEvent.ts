@@ -21,3 +21,8 @@ export enum SkillCtrlEvent {
     /**技能关闭 */
     OnToggleOff="onToggleOff",
 }
+
+export class SkillActorEvent {
+    /**技能流程通知事件 {eventName:SkillCtrlEvent,info:any}*/
+    public static SKILL_CTRL_EVENT_EMIT = "SKILL_CTRL_EVENT_EMIT";
+}

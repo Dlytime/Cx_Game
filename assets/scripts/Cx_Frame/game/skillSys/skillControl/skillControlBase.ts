@@ -15,6 +15,7 @@ export default abstract class skillControlBase {
     /**流程数据初始化,在生成时调用 */
     public init(mManager:skillControlMgr,actorNode:cc.Node){
         this.mManager = mManager;
+        this.actorNode = actorNode;
     };
     /**装载数据 */
     public abstract loadData(data:any);

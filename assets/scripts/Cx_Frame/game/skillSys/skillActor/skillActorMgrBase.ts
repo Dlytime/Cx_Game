@@ -8,18 +8,25 @@
 import buffBase from "../buff/buffBase";
 import buffManager from "../buff/buffManager";
 import skillBase from "../skill/skillBase";
+import skill_test from "../skill/skill_test";
+import { SkillCtrlEvent } from "../skillConfig/SkillEvent";
 import skillControlMgr from "../skillControl/skillControlMgr";
-
-const {ccclass, property} = cc._decorator;
-
-@ccclass
-export default class skillActorMgrBase extends cc.Component {
+export default class skillActorMgrBase{
     protected actorAttribute:any = null;
-    protected skillOwe:Array<skillBase> = [];
+    protected oweSkills:Array<skillBase> = [];
 
     protected buffManager:buffManager = null;
     protected controlMgr:skillControlMgr = new skillControlMgr();
-    fireSKill<T extends skillBase>(skill:T) {
+
+    init(actorNode:cc.Node){
+        this.controlMgr.init(this,actorNode);
+    }
+    initSkill(skills:Array<skillBase>) {
+        this.oweSkills = skills;
+    }
+    fireSKill(tag:number) {
+        let skill = this.oweSkills[tag];
+        if(!skill) return console.error("canot find skill tag ",tag);
         if(!this.baseIsAllowFire(skill)) return;
         if(!this.isAllowFire(skill)) return;
         console.log("条件判断完毕，进入技能释放流程");

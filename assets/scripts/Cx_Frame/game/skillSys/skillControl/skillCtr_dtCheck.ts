@@ -6,6 +6,7 @@ import skillControlMgr from "./skillControlMgr";
  * 技能流程：帧检测模块
  */
 export default class skillCtrl_dtCheck extends skillControlBase {
+    protected ctrData: any = null;
     protected ctrType: string = "dtCheck";
     private dtCbId:number = null;
     private _isAllowCheck:boolean = false;
