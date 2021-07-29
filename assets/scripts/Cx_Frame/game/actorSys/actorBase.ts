@@ -1,7 +1,8 @@
-import skillBase from "../skillSys/skill/skillBase";
-import skill_test from "../skillSys/skill/skill_test";
-import skillActorMgrBase from "../skillSys/skillActor/skillActorMgrBase";
-import { SkillActorEvent, SkillCtrlEvent } from "../skillSys/skillConfig/SkillEvent";
+import skillBase from "../skillSys/logic/skill/skillBase";
+import skill_test from "../skillSys/logic/skill/skill_test";
+import skill_test_bullet from "../skillSys/logic/skill/skill_test_bullet";
+import skillActorMgrBase from "../skillSys/logic/skillActorMgrBase";
+import { SkillActorEvent, SkillCtrlEvent } from "../skillSys/logic/skillConfig/SkillEvent";
 
 /**
  * 角色表现层基类：
@@ -13,7 +14,7 @@ const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class actorBase extends cc.Component {
-    protected ownSkills:Array<skillBase> = [new skill_test()] 
+    protected ownSkills:Array<skillBase> = [new skill_test(),new skill_test_bullet()] 
     private skillSysMgr:skillActorMgrBase = null;
 
     onLoad() {
@@ -30,14 +31,24 @@ export default class actorBase extends cc.Component {
                     {"ctrlName":"trigger","data":{"event":SkillCtrlEvent.recover,"dt":0.1}},
                     {"ctrlName":"trigger","data":{"event":SkillCtrlEvent.complete,"dt":0}},
                 ]
-            }
+            },
+            "skill_test_bullet":{
+                valueData:{},
+                typeData:{},
+                controlData: [
+                    {"ctrlName":"trigger","data":{"event":SkillCtrlEvent.preparation,"dt":0.5}},
+                    {"ctrlName":"trigger","data":{"event":SkillCtrlEvent.fire,"dt":0}},
+                    {"ctrlName":"trigger","data":{"event":SkillCtrlEvent.recover,"dt":0.1}},
+                    {"ctrlName":"trigger","data":{"event":SkillCtrlEvent.complete,"dt":0}},
+                ]
+            },
         }
         this.initSkillSys(skillData);
 
         this.registEvent();
 
         setTimeout(() => {
-            this.fireSkill(0);
+            this.fireSkill(1);
         }, 2000);
     }
 

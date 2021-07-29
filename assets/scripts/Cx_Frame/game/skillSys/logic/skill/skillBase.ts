@@ -1,8 +1,10 @@
-import skillActorMgrBase from "../skillActor/skillActorMgrBase";
+import skillActorMgrBase from "../skillActorMgrBase";
 
 /**
- * 技能基类
+ * 技能逻辑对象基类
  * 1、存储技能数据等基本信息
+ * 2、管理技能生效逻辑,如远程技能：模拟技能实体运行轨迹，触发伤害
+ * 3、通知表现层：添加技能实体，播放对应特效、做对应路径运动等
  */
 export default abstract class skillBase {
 	public abstract readonly skillName:string;

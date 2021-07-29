@@ -1,16 +1,13 @@
+import buffManager from "./buff/buffManager";
+import skillBase from "./skill/skillBase";
+import skillControlMgr from "./skillControl/skillControlMgr";
+
 /**
- * 角色技能管理类
+ * 角色技能管理类,技能系统逻辑层入口
  * 1、玩家技能相关数据管理(玩家基础属性、拥有技能等,技能数据的载入)
  * 2、释放\停止技能(逻辑层、表现层)
  * 3、buff管理(添加(覆盖)、删除)，与buff实际管理类：buffMangager通信
  */
-
-import buffBase from "../buff/buffBase";
-import buffManager from "../buff/buffManager";
-import skillBase from "../skill/skillBase";
-import skill_test from "../skill/skill_test";
-import { SkillCtrlEvent } from "../skillConfig/SkillEvent";
-import skillControlMgr from "../skillControl/skillControlMgr";
 export default class skillActorMgrBase{
     protected actorAttribute:any = null;
     protected oweSkills:Array<skillBase> = [];

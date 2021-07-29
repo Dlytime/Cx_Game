@@ -1,4 +1,4 @@
-import skillActorMgrBase from "../skillActor/skillActorMgrBase";
+import skillActorMgrBase from "../skillActorMgrBase";
 import { SkillActorEvent, SkillCtrlEvent } from "../skillConfig/SkillEvent";
 import skillControlBase from "./skillControlBase";
 import skillCtrl_timer from "./skillCtr_timer";
